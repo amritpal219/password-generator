@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SecurePass Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+background:#0f172a;
+font-family:Arial;
+color:white;
+text-align:center;
+padding:50px;
+}
+
+.container{
+background:#020617;
+padding:30px;
+border-radius:10px;
+display:inline-block;
+width:320px;
+}
+
+h1{
+color:#38bdf8;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+font-size:16px;
+}
+
+button{
+margin-top:10px;
+padding:12px;
+width:100%;
+background:#38bdf8;
+border:none;
+cursor:pointer;
+font-size:16px;
+}
+
+.strength{
+margin-top:10px;
+font-weight:bold;
+}
+
+.weak{
+color:red;
+}
+
+.medium{
+color:orange;
+}
+
+.strong{
+color:lightgreen;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>SecurePass Pro</h1>
+
+<h3>Generate Password</h3>
+
+<input type="text" id="generatedPassword" readonly>
+
+<button onclick="generatePassword()">Generate Password</button>
+
+<button onclick="copyPassword()">Copy Password</button>
+
+<hr>
+
+<h3>Check Password Strength</h3>
+
+<input type="text" id="checkPassword" placeholder="Enter your password" onkeyup="checkStrength()">
+
+<div id="strengthResult" class="strength"></div>
+
+</div>
+
+<script>
+
+function generatePassword(){
+
+let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
+
+let password="";
+
+for(let i=0;i<12;i++){
+
+password+=chars.charAt(Math.floor(Math.random()*chars.length));
+
+}
+
+document.getElementById("generatedPassword").value=password;
+
+}
+
+
+function copyPassword(){
+
+let pass=document.getElementById("generatedPassword");
+
+pass.select();
+
+document.execCommand("copy");
+
+alert("Password Copied");
+
+}
+
+
+function checkStrength(){
+
+let password=document.getElementById("checkPassword").value;
+
+let result=document.getElementById("strengthResult");
+
+let strength=0;
+
+
+if(password.length>=8){
+strength++;
+}
+
+if(password.match(/[A-Z]/)){
+strength++;
+}
+
+if(password.match(/[0-9]/)){
+strength++;
+}
+
+if(password.match(/[@#$%&*!]/)){
+strength++;
+}
+
+
+if(strength<=1){
+
+result.innerHTML="Weak Password";
+
+result.className="strength weak";
+
+}
+
+else if(strength==2 || strength==3){
+
+result.innerHTML="Medium Password";
+
+result.className="strength medium";
+
+}
+
+else{
+
+result.innerHTML="Strong Password";
+
+result.className="strength strong";
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
